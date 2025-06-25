@@ -1,0 +1,33 @@
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Create a DataFrame to store model performance metrics
+model_comparison = pd.DataFrame({
+    "Model": list(results.keys()),
+    "MSE": [metrics["MSE"] for metrics in results.values()],
+    "R²": [metrics["R²"] for metrics in results.values()]
+})
+
+# Sort by R² for better visualization
+model_comparison = model_comparison.sort_values(by="R²", ascending=False)
+
+# Plot MSE and R² for all models
+plt.figure(figsize=(14, 6))
+
+# MSE Bar Plot
+plt.subplot(1, 2, 1)
+sns.barplot(x="MSE", y="Model", data=model_comparison, palette="viridis")
+plt.title("Model Comparison - Mean Squared Error (MSE)")
+plt.xlabel("Mean Squared Error")
+plt.ylabel("Model")
+
+# R² Bar Plot
+plt.subplot(1, 2, 2)
+sns.barplot(x="R²", y="Model", data=model_comparison, palette="viridis")
+plt.title("Model Comparison - R² Score")
+plt.xlabel("R² Score")
+plt.ylabel("Model")
+
+plt.tight_layout()
+plt.show()
